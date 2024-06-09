@@ -13,7 +13,7 @@ import {
 } from "../components/auth-components";
 import GithubButton from "../components/GithubBtn";
 
-export default function CreateAccount() {
+export default function Signup() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
