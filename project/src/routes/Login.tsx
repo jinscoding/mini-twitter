@@ -11,6 +11,7 @@ import {
   Title,
   Wrapper,
 } from "../components/auth-components";
+import GithubButton from "../components/GithubBtn";
 
 export default function CreateAccount() {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ export default function CreateAccount() {
   };
   return (
     <Wrapper>
-      <Title>Log into 𝕏</Title>
+      <Title>Log into</Title>
       <Form onSubmit={onSubmit}>
         <Input
           onChange={onChange}
@@ -69,8 +70,9 @@ export default function CreateAccount() {
       {error !== "" ? <Error>{error}</Error> : null}
       <Switcher>
         Don't have an account?{" "}
-        <Link to="/create-account">Create one &rarr;</Link>
+        <Link to="/signup">Create one &rarr;</Link>
       </Switcher>
+      <GithubButton />
     </Wrapper>
   );
 }

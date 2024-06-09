@@ -15,7 +15,7 @@ import {
 
 export default function Signup() {
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ export default function Signup() {
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {
             target: { name, value },
-        } = e;
+        } = e; 
         if (name === "name") {
             setName(value);
         } else if (name === "email") {
@@ -39,7 +39,7 @@ export default function Signup() {
         setError("");
         if(isLoading || name === "" || email === "" || password === "") return;
         try{
-            setIsLoading(true);
+            setLoading(true);
             const credentials = await createUserWithEmailAndPassword(auth, email, password);
             console.log(credentials.user);
             await updateProfile(credentials.user, {
@@ -51,7 +51,7 @@ export default function Signup() {
                 setError(e.message);
       }
         } finally {
-            setIsLoading(false);
+            setLoading(false);
         }
     }
 

@@ -7,9 +7,9 @@ import Signup from "./routes/Signup"
 import styled, { createGlobalStyle } from "styled-components"
 import reset from "styled-reset"
 import { useEffect, useState } from "react"
-import LoadingScreen from "./components/loadingScreen"
+import LoadingScreen from "./components/LoadingScreen"
 import { auth } from "./firebase"
-import ProtectedRoute from "./components/protectedRoute"
+import ProtectedRoute from "./components/ProtectedRoute"
 
 const router = createBrowserRouter([
   {
