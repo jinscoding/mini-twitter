@@ -55,7 +55,7 @@ ${reset};
   box-sizing: border-box;
 }
 body {
-  background-color: black;
+  background-color: #87CEFA;
   color:white;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Sege UI",
   Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetice Neue",

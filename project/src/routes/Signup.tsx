@@ -11,6 +11,7 @@ import {
   Title,
   Wrapper,
 } from "../components/auth-components";
+import GithubButton from "../components/GithubBtn";
 
 interface FormData {
   name?: string;
@@ -57,6 +58,7 @@ export default function Signup() {
       <Switcher>
         이미 계정이 있으신가요? <Link to="/login">로그인 &rarr;</Link>
       </Switcher>
+      <GithubButton/>
     </Wrapper>
   );
 }
