@@ -37,6 +37,7 @@ export const Input = styled.input`
 `;
 
 export const Error = styled.span`
+  margin-left: 10px;
   font-weight: 600;
   color: tomato;
 `;
