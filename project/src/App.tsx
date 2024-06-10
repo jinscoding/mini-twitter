@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import LoadingScreen from "./components/LoadingScreen"
 import { auth } from "./firebase"
 import ProtectedRoute from "./components/ProtectedRoute"
+import ResetPwd from "./routes/ResetPwd"
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />
+  },
+  {
+    path:"/resetpwd",
+    element: <ResetPwd />
   }
 ])
 

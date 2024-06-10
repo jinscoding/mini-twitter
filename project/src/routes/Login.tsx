@@ -127,6 +127,7 @@ export default function Login() {
 
       <Switcher>
         아직 회원이 아니신가요?<Link to="/signup">회원가입 &rarr;</Link> <br/><br/>
+        비밀번호를 잊으셨나요?<Link to="/resetpwd"> 비밀번호 변경 &rarr;</Link>
       </Switcher>
     </Wrapper>
   );
