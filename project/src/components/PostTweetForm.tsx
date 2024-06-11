@@ -1,9 +1,9 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { styled } from "styled-components";
 import { auth, db, storage } from "../firebase";
 import { Error } from "./auth-components";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const Form = styled.form`
   display: flex;
@@ -95,7 +95,11 @@ export default function PostTweetForm() {
           storage,
           `tweets/${user.uid}-${user.displayName}/${doc.id}`
         );
-        await uploadBytes(locationRef, file);
+        const result = await uploadBytes(locationRef, file);
+        const url = await getDownloadURL(result.ref);
+        await updateDoc(doc, {
+          photo: url,
+        });
       }
       reset();
     } catch (e) {
