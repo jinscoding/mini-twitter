@@ -77,6 +77,8 @@ export default function PostTweetForm() {
     watch, // watch 함수를 추가하여 파일 첨부 여부를 감시합니다.
   } = useForm<FormProps>();
 
+  const MAX_FILE_SIZE = 1024 * 1024;
+
   const onSubmit = async (data: FormProps) => {
     console.log(data.file);
     const user = auth.currentUser;
@@ -91,6 +93,11 @@ export default function PostTweetForm() {
       });
       if (data.file && data.file.length > 0) {
         const file = data.file[0];
+        if (file.size > MAX_FILE_SIZE) {
+          console.log("파일 크기가 너무 큽니다. 1MB를 초과할 수 없습니다.");
+          return;
+        }
+
         const locationRef = ref(
           storage,
           `tweets/${user.uid}-${user.displayName}/${doc.id}`
