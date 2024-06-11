@@ -1,8 +1,9 @@
 import { addDoc, collection } from "firebase/firestore";
 import { useForm } from "react-hook-form";
 import { styled } from "styled-components";
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import { Error } from "./auth-components";
+import { ref, uploadBytes } from "firebase/storage";
 
 const Form = styled.form`
   display: flex;
@@ -73,25 +74,36 @@ export default function PostTweetForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    watch, // watch 함수를 추가하여 파일 첨부 여부를 감시합니다.
   } = useForm<FormProps>();
 
   const onSubmit = async (data: FormProps) => {
+    console.log(data.file);
     const user = auth.currentUser;
     if (!user || data.tweet === "" || data.tweet.length > 180) return;
 
     try {
-      await addDoc(collection(db, "tweets"), {
+      const doc = await addDoc(collection(db, "tweets"), {
         tweet: data.tweet,
         createdAt: Date.now(),
         username: user.displayName || "Anonymous",
         userId: user.uid,
       });
-      // Reset form after submission
+      if (data.file && data.file.length > 0) {
+        const file = data.file[0];
+        const locationRef = ref(
+          storage,
+          `tweets/${user.uid}-${user.displayName}/${doc.id}`
+        );
+        await uploadBytes(locationRef, file);
+      }
       reset();
     } catch (e) {
       console.log(e);
     }
   };
+
+  const data = watch(); // watch 함수를 사용하여 data 객체를 가져옵니다.
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -102,12 +114,13 @@ export default function PostTweetForm() {
           required: "글을 작성해주세요!!",
           maxLength: 180,
         })}
-        placeholder='좋은 일만 가득하길'
+        placeholder='좋은 일만 가득하길...'
       />
       {errors.tweet && <Error>{errors.tweet.message}</Error>}
 
       <AttachFileButton htmlFor='file'>
-        {errors.file ? "첨부 ✅" : "사진 첨부"}
+        {/* 파일이 첨부되었고, 첨부된 파일이 있는 경우에만 '첨부 완료' 표시 */}
+        {data.file && data.file.length > 0 ? "첨부 완료✅" : "파일 첨부"}
       </AttachFileButton>
       <AttachFileInput
         {...register("file")}
@@ -115,7 +128,6 @@ export default function PostTweetForm() {
         id='file'
         accept='image/*'
       />
-      {errors.file && <Error>{errors.file.message}</Error>}
 
       <SubmitBtn
         type='submit'
