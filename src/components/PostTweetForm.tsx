@@ -125,7 +125,7 @@ export default function PostTweetForm() {
           required: "글을 작성해주세요!!",
           maxLength: 180,
         })}
-        placeholder='좋은 일만 가득하길...'
+        placeholder='당신의 이야기를 적어보세요..'
       />
       {errors.tweet && <Error>{errors.tweet.message}</Error>}
 
