@@ -63,7 +63,9 @@ const SubmitBtn = styled.input`
   }
 `;
 
-interface FormProps {
+export const MAX_FILE_SIZE = 1024 * 1024;
+
+export interface FormProps {
   tweet: string;
   file: FileList;
 }
@@ -77,10 +79,7 @@ export default function PostTweetForm() {
     watch, // watch 함수를 추가하여 파일 첨부 여부를 감시합니다.
   } = useForm<FormProps>();
 
-  const MAX_FILE_SIZE = 1024 * 1024;
-
   const onSubmit = async (data: FormProps) => {
-    console.log(data.file);
     const user = auth.currentUser;
     if (!user || data.tweet === "" || data.tweet.length > 180) return;
 
@@ -102,7 +101,7 @@ export default function PostTweetForm() {
         const result = await uploadBytes(locationRef, file);
         const url = await getDownloadURL(result.ref);
         await updateDoc(doc, {
-          photo: url,
+          file: url,
         });
       }
       reset();

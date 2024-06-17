@@ -13,7 +13,7 @@ import { Unsubscribe } from "firebase/database";
 
 export interface ITweet {
   id: string;
-  photo?: string;
+  file?: string;
   tweet: string;
   userId: string;
   username: string;
@@ -38,13 +38,13 @@ export default function Timeline() {
       );
       unsubscribe = await onSnapshot(tweetsQuery, (snapshot) => {
         const tweets = snapshot.docs.map((doc) => {
-          const { tweet, createdAt, userId, username, photo } = doc.data();
+          const { tweet, createdAt, userId, username, file } = doc.data();
           return {
             tweet,
             createdAt,
             userId,
             username,
-            photo,
+            file,
             id: doc.id,
           };
         });
